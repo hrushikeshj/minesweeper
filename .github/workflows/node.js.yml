@@ -25,5 +25,14 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    - name: List build files
+      run: |
+        ls
+        ls ./build
+    - name: Checkout hrushikeshj.github.io
+      uses: actions/checkout@v3
+      with:
+        repository: hrushikeshj/hrushikeshj.github.io
+        path: hrushikeshj.github.io
     - run: ls
-    - run: ls ./build
+    
