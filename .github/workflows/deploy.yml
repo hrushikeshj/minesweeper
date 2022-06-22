@@ -4,10 +4,11 @@
 name: Deploy to hrushikeshj.github.io
 
 on:
-  tags:
-    - deploy
+  push:
+    tags:
+      - deploy
   workflow_dispatch:
-  
+
 env:
   CI: false
 
