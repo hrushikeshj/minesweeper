@@ -45,6 +45,8 @@ jobs:
     - name: Push to hrushikeshj.github.io
       run: |
         cd hrushikeshj.github.io
+        git config --global user.email "hrushi2002j@gmail.com"
+        git config --global user.name "hrushikeshj"
         git add .
         git commit -m "CI ${{ github.repository }}"
         git push https://hrushikeshj:${{ secrets.API_TOKEN_GITHUB }}@github.com/hrushikeshj/hrushikeshj.github.io main
