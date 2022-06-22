@@ -1,0 +1,69 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Deploy to hrushikeshj.github.io
+
+on:
+  workflow_dispatch:
+  
+env:
+  CI: false
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 16.15.1
+      uses: actions/setup-node@v3
+      env: 
+        CI: false
+      with:
+        node-version: 16.15.1
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: List build files
+      run: |
+        ls
+        ls ./build
+    - name: Checkout hrushikeshj.github.io
+      uses: actions/checkout@v3
+      with:
+        repository: hrushikeshj/hrushikeshj.github.io
+        ref: main
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+        path: hrushikeshj.github.io
+
+    - name: Copy build files
+      run: |
+        ls
+        rm ./hrushikeshj.github.io/minesweeper/* -r
+        cp build/* ./hrushikeshj.github.io/minesweeper -r
+        ls ./hrushikeshj.github.io -a -R -I.git
+    
+    - name: Push to hrushikeshj.github.io
+      run: |
+        cd hrushikeshj.github.io
+        git config --global user.email "hrushi2002j@gmail.com"
+        git config --global user.name "hrushikeshj"
+        git config --global user.password "${{ secrets.API_TOKEN_GITHUB }}"
+        git add .
+        git commit -m "CI ${{ github.repository }}"
+        git push https://hrushikeshj@github.com/hrushikeshj/hrushikeshj.github.io main
+
+#     - name: Pushes to hrushikeshj.github.io
+#       id: push_directory
+#       uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
+#       env:
+#         SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+#       with:
+#         source-directory: hrushikeshj.github.io/
+#         destination-github-username: 'hrushikeshj'
+#         destination-repository-name: 'hrushikeshj.github.io'
+#         user-email: hrushi2002j@gmail.com
+#         commit-message: CI ${{ github.repository }}
+#         target-branch: main
+    
