@@ -48,7 +48,7 @@ class Mine extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false})),
+        blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
         init: true
       }
   }
@@ -106,11 +106,20 @@ class Mine extends React.Component {
           for(const b of row)
             if(!b.shown) not_shown += 1;
       }
-      if(not_shown == NO_MINES)
+      // win 
+      if((not_shown == NO_MINES) && not_shown != 0)
         alert("Win")
     }
 
     this.setState({blocks: blocks})
+  }
+
+  oMD(e, i, j){
+    let blocks = this.blocks();
+    if(blocks[i][j].shown) return;
+
+    blocks[i][j].mark = true;
+    if (e.buttons == 2) this.setState({blocks: blocks})
   }
 
   render() { 
@@ -118,7 +127,7 @@ class Mine extends React.Component {
       <div className='grid'>
       {
         this.state.blocks.map((row, i) => {
-          return row.map((s, j) => <Block onClick={()=>this.handelClick(i, j)} config={s} key={`${i}-${j}`} val="4" i={i} j={j}/>)
+          return row.map((s, j) => <Block onClick={()=>this.handelClick(i, j)} oMD={(e) => this.oMD(e, i, j)} config={s} key={`${i}-${j}`} val="4" i={i} j={j}/>)
         })
       }
       </div>

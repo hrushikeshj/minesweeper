@@ -1,17 +1,22 @@
 import React from 'react';
 
-function Block({config, onClick, i, j}){
-  let {mine, val, shown} = config
+function Block({config, onClick, oMD, i, j}){
+  const preventDefault = (e) => { e.preventDefault() }
+
+  let {mine, val, shown, mark} = config
   if(mine)
     val = "🤯"
 
-  if(!shown)
+  if(!shown){
     val = ''
-
+  
+    if(mark )
+      val = 'x'
+  }
   // ({i}, {j}, {val})
   console.log(shown, val)
   return (
-    <div className='block' key={`${i}-${j}`} onClick={() => onClick()}>{val}</div>
+    <div onContextMenu={preventDefault} className='block' key={`${i}-${j}`} onClick={() => onClick()} onMouseDown={(e)=>oMD(e)}>{val}</div>
   );
 }
 
