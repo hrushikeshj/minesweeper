@@ -4,6 +4,8 @@
 name: Deploy to hrushikeshj.github.io
 
 on:
+  tags:
+    - deploy
   workflow_dispatch:
   
 env:
