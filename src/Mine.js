@@ -120,7 +120,7 @@ class Mine extends React.Component {
     let blocks = this.blocks();
     if(blocks[i][j].shown) return;
 
-    blocks[i][j].mark = true;
+    blocks[i][j].mark = !blocks[i][j].mark;
     if (e.buttons == 2) this.setState({blocks: blocks})
   }
 
