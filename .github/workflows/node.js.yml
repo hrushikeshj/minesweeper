@@ -40,17 +40,18 @@ jobs:
         ls
         rm ./hrushikeshj.github.io/minesweeper/* -r
         cp build/* ./hrushikeshj.github.io/minesweeper -r
+        ls ./hrushikeshj.github.io -a -R -I.git
         
-    - name: Pushes to hrushikeshj.github.io
-      id: push_directory
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-        source-directory: hrushikeshj.github.io/
-        destination-github-username: 'hrushikeshj'
-        destination-repository-name: 'hrushikeshj.github.io'
-        user-email: hrushi2002j@gmail.com
-        commit-message: CI ${{ github.repository }}
-        target-branch: main
+#     - name: Pushes to hrushikeshj.github.io
+#       id: push_directory
+#       uses: cpina/github-action-push-to-another-repository@main
+#       env:
+#         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+#       with:
+#         source-directory: hrushikeshj.github.io/
+#         destination-github-username: 'hrushikeshj'
+#         destination-repository-name: 'hrushikeshj.github.io'
+#         user-email: hrushi2002j@gmail.com
+#         commit-message: CI ${{ github.repository }}
+#         target-branch: main
     
