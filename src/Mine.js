@@ -17,8 +17,8 @@ function corner(i, j, m, n){
 function neighbours_index(i, j, rowLimit, columnLimit) {
 
   let ans = []
-  for(var x = Math.max(0, i-1); x <= Math.min(i+1, rowLimit-1); x++) {
-    for(var y = Math.max(0, j-1); y <= Math.min(j+1, columnLimit-1); y++) {
+  for(let x = Math.max(0, i-1); x <= Math.min(i+1, rowLimit-1); x++) {
+    for(let y = Math.max(0, j-1); y <= Math.min(j+1, columnLimit-1); y++) {
       if(x !== i || y !== j) {
         ans.push([x, y]);
       }
@@ -76,6 +76,8 @@ class Mine extends React.Component {
         continue;
 
       blocks[r][c].mine = true;
+      mines.push(`${r}-${c}`);
+
       // incremnt mine val of other blocks
       for(let [x, y] of neighbours_index(r, c, ROW, COL))
         blocks[x][y].val += 1;
