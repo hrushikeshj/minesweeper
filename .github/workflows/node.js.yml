@@ -36,7 +36,7 @@ jobs:
         path: hrushikeshj.github.io
 
     - name: Copy build files
-    - run: |
+      run: |
         ls
         rm ./hrushikeshj.github.io/minesweeper/* -r
         cp build/* ./hrushikeshj.github.io/minesweeper -r
