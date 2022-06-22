@@ -41,7 +41,14 @@ jobs:
         rm ./hrushikeshj.github.io/minesweeper/* -r
         cp build/* ./hrushikeshj.github.io/minesweeper -r
         ls ./hrushikeshj.github.io -a -R -I.git
-        
+    
+    - name: Push to hrushikeshj.github.io
+      run: |
+        cd hrushikeshj.github.io
+        git add .
+        git commit -m "CI ${{ github.repository }}"
+        git push https://hrushikeshj:${{ secrets.API_TOKEN_GITHUB }}@github.com/hrushikeshj/hrushikeshj.github.io main
+
 #     - name: Pushes to hrushikeshj.github.io
 #       id: push_directory
 #       uses: cpina/github-action-push-to-another-repository@main
