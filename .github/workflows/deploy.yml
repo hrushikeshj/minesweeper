@@ -21,8 +21,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Use Node.js 16.15.1
       uses: actions/setup-node@v3
-      env: 
-        CI: false
       with:
         node-version: 16.15.1
         cache: 'npm'
@@ -50,9 +48,6 @@ jobs:
     - name: Push to hrushikeshj.github.io
       run: |
         cd hrushikeshj.github.io
-        git config --global user.email "hrushi2002j@gmail.com"
-        git config --global user.name "hrushikeshj"
-        git config --global user.password "${{ secrets.API_TOKEN_GITHUB }}"
         git add .
         git commit -m "CI ${{ github.repository }}"
         git push https://hrushikeshj@github.com/hrushikeshj/hrushikeshj.github.io main
