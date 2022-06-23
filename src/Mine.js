@@ -1,8 +1,8 @@
 import React from 'react';
 import Block from './Block'
-const ROW = 9;
-const COL = 4;
-const NO_MINES = 6;
+let ROW = 9;
+let COL = 4;
+let NO_MINES = 6;
 
 function corner(i, j, m, n){
   if(i == 0)
@@ -27,30 +27,44 @@ function neighbours_index(i, j, rowLimit, columnLimit) {
   return ans;
 }
 
-function neighbours(i, j, m, n){
-  // m and n size
-  /*
-  array[i-1][j-1]
-  array[i-1][j]
-  array[i-1][j+1]
-
-  array[i][j-1]
-  array[i][j+1]
-
-  array[i+1][j-1]
-  array[i+1][j]
-  array[i+1][j+1]
-  */
-
+function setRootVariables(){
+  let r = document.querySelector(':root');
+  r.style.setProperty('--row', ROW);
+  r.style.setProperty('--col', COL);
 }
 
 class Mine extends React.Component {
   constructor(props) {
       super(props);
+      ROW = +props.ROW
+      COL = +props.COL
+      if(props.NO_MINES != null) NO_MINES = +props.NO_MINES
+
+      setRootVariables()
+
       this.state = {
         blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
         init: true
       }
+      console.log("init", ROW, COL, this.state)
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if(props.ROW != ROW || props.COL != COL || props.NO_MINES != NO_MINES){
+        ROW = +props.ROW
+        COL = +props.COL
+        NO_MINES = +props.NO_MINES
+
+        console.log("update", ROW, COL)
+
+        setRootVariables()
+
+        return {
+          blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
+          init: true
+        }
+    }
+    return null;
   }
 
   blocks(){
@@ -138,3 +152,5 @@ class Mine extends React.Component {
 }
 
 export default Mine;
+
+//chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"

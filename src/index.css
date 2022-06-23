@@ -1,3 +1,13 @@
+:root{
+  --row: 9;
+  --col: 4;
+  --size: 40px;
+  --green-light: #aad751;
+  --green-dark: #a2d149;
+  --back-light: #e5c29f;
+  --back-dark: #d7b899;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,10 +16,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin-top: 30px;
-  margin-left: 30px;
-  --row: 9;
-  --col: 4;
-  --size: 50px;
 }
 
 code {
@@ -30,7 +36,29 @@ code {
   text-align: center;
 }
 
+.green-light{
+  background-color: #c3ed70;
+}
 
+.green-dark{
+  background-color: #a1d343;
+}
+
+.back-light{
+  background-color: #d7a370;
+}
+
+.back-dark{
+  background-color: #c1a488;
+}
+
+.back-light{
+  background-color: #f3bf8b;
+}
+
+.back-dark{
+  background-color: #d49860;
+}
 /* for centering */
 .block {
   position: relative;
@@ -43,3 +71,12 @@ code {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+/* ------end---- */
+
+
+.cont {
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+
