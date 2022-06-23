@@ -1,12 +1,21 @@
 import React from 'react';
 
+const DEFAULT_VAL = {row: 9, col: 4, no_mines: 6}
+const DEFAULT_CSS =  {size: 50, gl: '#c3ed70',gd: '#a1d343',bl: '#f3bf8b',bd: '#d49860'}
+
 class CustomizeForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {row: 9, col: 4, no_mines: 6};
+    let css = {}
+
+    this.state = {...DEFAULT_CSS, ...this.props.state};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  resetVal(){
+    this.setState({...DEFAULT_VAL, ...DEFAULT_CSS})
   }
 
   handleInputChange(event) {
@@ -21,35 +30,69 @@ class CustomizeForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.updateCongif({ROW: this.state.row, COL: this.state.col, NO_MINES: this.state.no_mines})
+    if(this.state.no_mines < this.state.row * this.state.col)
+      this.props.updateCongif({ROW: this.state.row, COL: this.state.col, NO_MINES: this.state.no_mines}, 
+        {gl: this.state.gl, gd: this.state.gd, bl: this.state.bl, bd: this.state.bd, size: this.state.size})
+    else
+      alert("Number of should be less than " + this.state.row * this.state.col)
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="row mb-3">
-          <label htmlFor="row" className="col-sm-2 col-form-label">Row</label>
-          <div className="col-sm-10">
-            <input type="number" name="row" className="form-control" id="row" value={this.state.row} onChange={this.handleInputChange}/>
+      <form onSubmit={this.handleSubmit} className="row g-3">
+        <div className="col-md-6">
+          <label htmlFor="row" className="form-label">Row</label>
+          <input type="number" name="row" className="form-control" id="row" value={this.state.row} onChange={this.handleInputChange}/>
+        </div>
+
+        <div className="col-md-6">
+          <label htmlFor="col" className="form-label">Col</label>
+          <input type="number" name="col" className="form-control" id="col" value={this.state.col} onChange={this.handleInputChange}/>
+        </div>
+
+        <div className="col-md-6">
+          <label htmlFor="cno_mines" className="form-label">Mines🚩</label>
+          <input type="number" name="no_mines" className="form-control" id="no_mines" value={this.state.no_mines} onChange={this.handleInputChange}/>
+        </div>
+
+        <div className="col-md-6">
+          <label htmlFor="size" className="form-label">Block Size</label>
+          <div className="input-group mb-3">
+            <input type="number" className="form-control" name="size" id="size" value={this.state.size} onChange={this.handleInputChange}/>
+            <span className="input-group-text" id="basic-addon2">px</span>
           </div>
         </div>
 
-        <div className="row mb-3">
-          <label htmlFor="col" className="col-sm-2 col-form-label">Col</label>
-          <div className="col-sm-10">
-            <input type="number" name="col" className="form-control" id="col" value={this.state.col} onChange={this.handleInputChange}/>
+        <div className="col-md-6 row colour">
+          <label className="form-label">Hidden Block Colour</label>
+          <hr/>
+          <div className="col-6">
+            <label className="form-label">Light</label>
+            <input type="color" className="form-control form-control-color" id="gl" name="gl" value={this.state.gl} onChange={this.handleInputChange} title="Choose your color"/>
+          </div>
+
+          <div className="col-6">
+            <label className="form-label">Dark</label>
+            <input type="color" className="form-control form-control-color" id="gd" name="gd" value={this.state.gd} onChange={this.handleInputChange} title="Choose your color"/>
           </div>
         </div>
 
-        <div className="row mb-3">
-          <label htmlFor="cno_mines" className="col-sm-2 col-form-label">Mines🚩</label>
-          <div className="col-sm-10">
-            <input type="number" name="no_mines" className="form-control" id="no_mines" value={this.state.no_mines} onChange={this.handleInputChange}/>
+        <div className="ml-1 col-md-6 row colour">
+          <label className="form-label">Shown Block Colour</label>
+          <hr/>
+          <div className="col-6">
+            <label className="form-label">Light</label>
+            <input type="color" className="form-control form-control-color" id="bl" name="bl" value={this.state.bl} onChange={this.handleInputChange} title="Choose your color"/>
+          </div>
+
+          <div className="col-6">
+            <label className="form-label">Dark</label>
+            <input type="color" className="form-control form-control-color" id="bd" name="bd" value={this.state.bd} onChange={this.handleInputChange} title="Choose your color"/>
           </div>
         </div>
-
         <p className='text-center'>
           <button type="submit" className="btn btn-primary">Apply</button>
+          <a style={{marginLeft: '10px'}} href="#!" onClick={() => this.resetVal()} className="btn btn-danger">Reset</a>
         </p>
       </form>
     );

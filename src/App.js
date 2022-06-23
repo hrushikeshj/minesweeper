@@ -4,20 +4,53 @@ import './App.css';
 import Mine from './Mine'
 import CustomizeForm from './CustomizeForm';
 
+const colour = {
+  gl: '--green-light',
+  gd: '--green-dark',
+  bl: '--back-light',
+  bd: '--back-dark'
+}
+
 class App extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = {
-      ROW: 9,
-      COL: 4,
-      NO_MINES: 6,
-      reset: true
+    
+    if(localStorage.getItem('minesweeper-app-state'))
+    this.state = {...JSON.parse(localStorage.getItem('minesweeper-app-state')), reset: true}
+    else
+      this.state = {
+        ROW: 9,
+        COL: 4,
+        NO_MINES: 6,
+        reset: true
+      }
+    
+    this.passToForm = {row: this.state.ROW, col: this.state.COL, no_mines: this.state.NO_MINES}
+
+    if(localStorage.getItem('minesweeper-css-var')){
+      let css = JSON.parse(localStorage.getItem('minesweeper-css-var'));
+      this.updateCssVar(css)
+      this.passToForm = {...this.passToForm, ...css}
     }
   }
 
-  updateCongif(s){
+  updateCssVar(css_var){
+    let r = document.querySelector(':root');
+    r.style.setProperty('--size', `${css_var.size}px`);
+    
+    for(const k in colour){
+      r.style.setProperty(colour[k], css_var[k]);
+    }
+  }
+
+  updateCongif(s, css_var){
     this.setState(s);
+    this.updateCssVar(css_var)
+  
+    // store row, col, no_mine
+    localStorage.setItem('minesweeper-app-state', JSON.stringify(s));
+    localStorage.setItem('minesweeper-css-var', JSON.stringify(css_var));
   }
 
   resetGame(){
@@ -51,7 +84,7 @@ class App extends React.Component{
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                <CustomizeForm updateCongif={(r) => this.updateCongif(r)}/>
+                <CustomizeForm updateCongif={(r, s) => this.updateCongif(r, s)} state={this.passToForm}/>
               </div>
             </div>
           </div>

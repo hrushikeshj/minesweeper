@@ -109,7 +109,6 @@ class Mine extends React.Component {
       this.generateMine(i, j)
       return;
     }
-    console.log(i, j);
 
     let blocks = this.blocks(), not_shown = 0;
   
