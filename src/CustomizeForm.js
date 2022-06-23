@@ -27,7 +27,7 @@ class CustomizeForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className="row mb-3 mt-3">
+        <div className="row mb-3">
           <label htmlFor="row" className="col-sm-2 col-form-label">Row</label>
           <div className="col-sm-10">
             <input type="number" name="row" className="form-control" id="row" value={this.state.row} onChange={this.handleInputChange}/>
@@ -48,7 +48,9 @@ class CustomizeForm extends React.Component {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary">Apply</button>
+        <p className='text-center'>
+          <button type="submit" className="btn btn-primary">Apply</button>
+        </p>
       </form>
     );
   }

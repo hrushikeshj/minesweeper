@@ -44,13 +44,14 @@ class Mine extends React.Component {
 
       this.state = {
         blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
-        init: true
+        init: true,
+        reset: true
       }
       console.log("init", ROW, COL, this.state)
   }
 
   static getDerivedStateFromProps(props, state) {
-    if(props.ROW != ROW || props.COL != COL || props.NO_MINES != NO_MINES){
+    if(props.ROW != ROW || props.COL != COL || props.NO_MINES != NO_MINES || state.reset != props.reset){
         ROW = +props.ROW
         COL = +props.COL
         NO_MINES = +props.NO_MINES
@@ -61,7 +62,8 @@ class Mine extends React.Component {
 
         return {
           blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
-          init: true
+          init: true,
+          reset: props.reset
         }
     }
     return null;
