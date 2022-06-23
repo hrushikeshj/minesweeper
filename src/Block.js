@@ -1,7 +1,24 @@
 import React from 'react';
+import useLongPress from "./hook/useLongPress";
 
 function Block({config, onClick, oMD, i, j}){
   const preventDefault = (e) => { e.preventDefault() }
+
+  //start
+  const onLongPress = () => {
+    alert("akdk")
+  };
+
+  //const onClick1 = () => {
+  //    alert("f")
+  //}
+
+  const defaultOptions = {
+      shouldPreventDefault: false,
+      delay: 500,
+  };
+  const longPressEvent = useLongPress(() => oMD({buttons: 2}), ()=>{}, defaultOptions);
+  //end
 
   let {mine, val, shown, mark} = config, colour, bg;
   if(mine)
@@ -22,7 +39,8 @@ function Block({config, onClick, oMD, i, j}){
     colour = i%2 != 0 ? `${bg}-light` : `${bg}-dark`
 
   return (
-    <div onContextMenu={preventDefault} className={`block ${colour}`} key={`${i}-${j}`} onClick={() => onClick()} onMouseDown={(e)=>oMD(e)}>
+    <div onContextMenu={preventDefault} {...longPressEvent} className={`block ${colour}`} key={`${i}-${j}`}
+      onClick={() => onClick()} onMouseDown={(e)=>oMD(e)}>
       <div className='centered-element'>
         { val }  
       </div>
