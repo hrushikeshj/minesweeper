@@ -16,7 +16,11 @@ function Block({config, onClick, oMD, i, j}){
   // ({i}, {j}, {val})
   console.log(shown, val)
   return (
-    <div onContextMenu={preventDefault} className='block' key={`${i}-${j}`} onClick={() => onClick()} onMouseDown={(e)=>oMD(e)}>{val}</div>
+    <div onContextMenu={preventDefault} className='block' key={`${i}-${j}`} onClick={() => onClick()} onMouseDown={(e)=>oMD(e)}>
+      <div className='centered-element'>
+        { val }  
+      </div>
+    </div>
   );
 }
 

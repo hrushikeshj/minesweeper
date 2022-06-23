@@ -29,3 +29,17 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
 }
+
+
+/* for centering */
+.block {
+  position: relative;
+}
+
+.centered-element {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
