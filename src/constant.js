@@ -8,3 +8,17 @@ export const DEFAULT_APP_STATE  = {
     COL: col,
     NO_MINES: no_mine
 }
+
+export const MINE_NUM_COLOR = {
+    "1": "#2196f3",
+    "2": "#1a4c1a",
+    "3": "#f40000",
+    "4": "#7b00d2",
+    "5": "#10becd",
+    "6": "#d51880",
+    "7": "#ffc107",
+    "8": "#ff5722"
+}
+// TODO
+// - toaster
+// - gif
