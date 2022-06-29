@@ -1,7 +1,6 @@
 import React from 'react';
 
-const DEFAULT_VAL = {row: 9, col: 4, no_mines: 6}
-const DEFAULT_CSS =  {size: 40, gl: '#c3ed70',gd: '#a1d343',bl: '#f3bf8b',bd: '#d49860'}
+import {DEFAULT_VAL, DEFAULT_CSS} from './constant'
 
 class CustomizeForm extends React.Component {
   constructor(props) {

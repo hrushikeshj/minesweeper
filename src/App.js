@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Mine from './Mine'
 import CustomizeForm from './CustomizeForm';
+import { DEFAULT_APP_STATE } from './constant'
 
 const colour = {
   gl: '--green-light',
@@ -11,21 +12,16 @@ const colour = {
   bd: '--back-dark'
 }
 
+const Minesweeper_App_State = 'minesweeper-app-state'
 class App extends React.Component{
 
   constructor(props){
     super(props);
     
-    if(localStorage.getItem('minesweeper-app-state'))
-    this.state = {...JSON.parse(localStorage.getItem('minesweeper-app-state')), reset: true, game_state: 'playing'}
+    if(localStorage.getItem(Minesweeper_App_State))
+    this.state = {...JSON.parse(localStorage.getItem(Minesweeper_App_State)), reset: true, game_state: 'playing'}
     else
-      this.state = {
-        ROW: 10,
-        COL: 10,
-        NO_MINES: 12,
-        reset: true,
-        game_state: 'playing'
-      }
+      this.state = {...DEFAULT_APP_STATE, reset: true, game_state: 'playing'}
     
     this.passToForm = {row: this.state.ROW, col: this.state.COL, no_mines: this.state.NO_MINES}
 
@@ -50,7 +46,7 @@ class App extends React.Component{
     this.updateCssVar(css_var)
   
     // store row, col, no_mine
-    localStorage.setItem('minesweeper-app-state', JSON.stringify(s));
+    localStorage.setItem(Minesweeper_App_State, JSON.stringify(s));
     localStorage.setItem('minesweeper-css-var', JSON.stringify(css_var));
   }
 
