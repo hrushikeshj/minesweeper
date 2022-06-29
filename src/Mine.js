@@ -33,6 +33,10 @@ function setRootVariables(){
   r.style.setProperty('--col', COL);
 }
 
+function zero(b){
+  return b.val == 0 && !b.mine
+}
+
 class Mine extends React.Component {
   constructor(props) {
       super(props);
@@ -99,8 +103,30 @@ class Mine extends React.Component {
         blocks[x][y].val += 1;
       count += 1;
     }
-    
+    blocks = this.showZeros(neighbours_index(i, j, ROW, COL), blocks)
     this.setState({blocks: blocks, init: false})
+  }
+
+  showZeros(neighbours, blocks){
+    let q=neighbours.slice(), x, y, zero_neighbours;
+    while(q.length > 0){
+      [x, y] = q.shift()
+      blocks[x][y].shown = true;
+
+      neighbours = neighbours_index(x, y, ROW, COL).filter(([x1, y1]) => !blocks[x1][y1].shown)
+
+      // show all neighbours of zero
+      if(zero(blocks[x][y]))
+        for(let [x1, y1] of neighbours)
+          blocks[x1][y1].shown = true
+
+      zero_neighbours = neighbours.filter(([x1, y1]) => zero(blocks[x][y]))
+
+      // add to the end of queue
+      q = [...q, ...zero_neighbours]
+    }
+
+    return blocks;
   }
 
   handelClick(i, j){
@@ -112,21 +138,27 @@ class Mine extends React.Component {
 
     let blocks = this.blocks(), not_shown = 0;
   
-    if(!blocks[i][j].shown){
-      blocks[i][j].shown = true;
+    blocks[i][j].shown = true;
   
-      if(blocks[i][j].mine)
-        alert("game over");
-      else{
-        // check the number of not shown mines
-        for(const row of blocks)
-          for(const b of row)
-            if(!b.shown) not_shown += 1;
-      }
-      // win 
-      if((not_shown == NO_MINES) && not_shown != 0)
-        alert("Win")
+    if(blocks[i][j].mine){
+      alert("game over");
+      this.props.setGameState('lost')
     }
+    else{
+      // check the number of not shown mines
+      for(const row of blocks)
+        for(const b of row)
+          if(!b.shown) not_shown += 1;
+    }
+    // win
+    console.log(not_shown, NO_MINES)
+    if((not_shown == NO_MINES) && not_shown != 0){
+      alert("Win")
+      this.props.setGameState('won')
+    }
+
+    if(zero(blocks[i][j]))
+      blocks = this.showZeros(neighbours_index(i, j, ROW, COL), blocks)
 
     this.setState({blocks: blocks})
   }

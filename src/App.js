@@ -17,13 +17,14 @@ class App extends React.Component{
     super(props);
     
     if(localStorage.getItem('minesweeper-app-state'))
-    this.state = {...JSON.parse(localStorage.getItem('minesweeper-app-state')), reset: true}
+    this.state = {...JSON.parse(localStorage.getItem('minesweeper-app-state')), reset: true, game_state: 'playing'}
     else
       this.state = {
-        ROW: 9,
-        COL: 4,
-        NO_MINES: 6,
-        reset: true
+        ROW: 10,
+        COL: 10,
+        NO_MINES: 12,
+        reset: true,
+        game_state: 'playing'
       }
     
     this.passToForm = {row: this.state.ROW, col: this.state.COL, no_mines: this.state.NO_MINES}
@@ -54,17 +55,28 @@ class App extends React.Component{
   }
 
   resetGame(){
+    if(this.state.game_state != "playing"){
+      this.setState({reset: !this.state.reset, game_state: 'playing'})
+      return;
+    }
+
     if(window.confirm("Are you sure?"))
       this.setState({reset: !this.state.reset})
   }
+
+  setGameState(s){
+    this.setState({game_state: s})
+  }
+
 
   render(){
     return(
       <>
         <div className='cont'>
-          <Mine ROW={this.state.ROW} COL={this.state.COL} NO_MINES={this.state.NO_MINES} reset={this.state.reset}/>
+          <Mine ROW={this.state.ROW} COL={this.state.COL} NO_MINES={this.state.NO_MINES} reset={this.state.reset} setGameState={(s) => this.setGameState(s)}/>
         </div>
-        
+        { this.state.game_state == 'won' ? "win" : "-" }
+        { this.state.game_state == 'lost' ? "lost" : "-" }
 
         <p className='text-center mt-3'>
         <button type="button" className="btn btn-outline-warning" id="reset-btn" onClick={()=>this.resetGame()}>Reset</button>

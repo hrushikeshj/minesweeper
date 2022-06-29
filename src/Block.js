@@ -30,6 +30,9 @@ function Block({config, onClick, oMD, i, j}){
     if(mark )
       val = "🚩"
   }
+  else{
+    if(val == 0) val = ""
+  }
 
   // ({i}, {j}, {val})
   bg = shown ? "back" : "green"
