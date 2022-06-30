@@ -50,7 +50,8 @@ class Mine extends React.Component {
         blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
         init: true,
         reset: true,
-        playing: true
+        playing: true,
+        flaged: 0
       }
       console.log("init", ROW, COL, this.state)
   }
@@ -69,7 +70,8 @@ class Mine extends React.Component {
           blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
           init: true,
           reset: props.reset,
-          playing: true
+          playing: true,
+          flaged: 0
         }
     }
     return null;
@@ -111,9 +113,15 @@ class Mine extends React.Component {
 
   showZeros(neighbours, blocks){
     let q=neighbours.slice(), x, y, zero_neighbours;
+    let f = this.state.flaged
+
     while(q.length > 0){
       [x, y] = q.shift()
       blocks[x][y].shown = true;
+
+      // extra for flaf
+      if(blocks[x][y].mark)
+        f -= 1
 
       neighbours = neighbours_index(x, y, ROW, COL).filter(([x1, y1]) => !blocks[x1][y1].shown)
 
@@ -128,6 +136,7 @@ class Mine extends React.Component {
       q = [...q, ...zero_neighbours]
     }
 
+    this.setState({flaged: f})
     return blocks;
   }
 
@@ -174,13 +183,25 @@ class Mine extends React.Component {
     if(blocks[i][j].shown) return;
 
     blocks[i][j].mark = !blocks[i][j].mark;
-    if (e.buttons == 2) this.setState({blocks: blocks})
+    if (e.buttons == 2){
+      let f = this.state.flaged
+
+      if(blocks[i][j].mark)
+        f += 1;
+      else
+        f -=1;
+
+      this.setState({blocks: blocks, flaged: f})
+    }
   }
 
   render() { 
     return (
       <div>
-      <div></div>
+      <div className="stat" style={{display: 'flex', justifyContent: 'center'}}>
+        <div className='mb-2' style={{fontSize: '20px'}}>🚩 {NO_MINES - this.state.flaged}</div>
+        
+      </div>
       <div className='grid'>
       {
         this.state.blocks.map((row, i) => {
