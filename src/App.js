@@ -79,7 +79,7 @@ class App extends React.Component{
         { this.state.game_state}
 
         <p className='text-center mt-3'>
-        <button type="button" className="btn btn-outline-warning" id="reset-btn" onClick={()=>this.resetGame()}>Reset</button>
+        <button type="button" className="btn btn-outline-warning" id="reset-btn" onClick={()=>this.resetGame()}>RESTART</button>
         <button type="button" className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
           <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"></path>
