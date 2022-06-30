@@ -76,7 +76,6 @@ class App extends React.Component{
           <Mine ROW={this.state.ROW} COL={this.state.COL} NO_MINES={this.state.NO_MINES} 
             reset={this.state.reset} setGameState={(s) => this.setGameState(s)} game_state={this.state.game_state}/>
         </div>
-        { this.state.game_state}
 
         <p className='text-center mt-3'>
         <button type="button" className="btn btn-outline-warning" id="reset-btn" onClick={()=>this.resetGame()}>RESTART</button>
