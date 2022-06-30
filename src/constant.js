@@ -21,4 +21,3 @@ export const MINE_NUM_COLOR = {
 }
 // TODO
 // - toaster
-// - gif

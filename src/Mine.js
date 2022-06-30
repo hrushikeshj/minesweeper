@@ -4,16 +4,6 @@ let ROW = 9;
 let COL = 4;
 let NO_MINES = 6;
 
-function corner(i, j, m, n){
-  if(i == 0)
-    if (j == 0 || j == n-1) return true;
-  
-  if(i == m-1)
-    if (j == 0 || j == n-1) return true;
-
-  return false;
-}
-
 function neighbours_index(i, j, rowLimit, columnLimit) {
 
   let ans = []
