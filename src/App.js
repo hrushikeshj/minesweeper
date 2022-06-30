@@ -3,8 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import Mine from './Mine'
 import CustomizeForm from './CustomizeForm';
+import Modal from './Modal'
+import { QueryClient, QueryClientProvider} from 'react-query'
 import { DEFAULT_APP_STATE } from './constant'
-
+ 
+const queryClient = new QueryClient()
+ 
 const colour = {
   gl: '--green-light',
   gd: '--green-dark',
@@ -69,10 +73,10 @@ class App extends React.Component{
     return(
       <>
         <div className='cont'>
-          <Mine ROW={this.state.ROW} COL={this.state.COL} NO_MINES={this.state.NO_MINES} reset={this.state.reset} setGameState={(s) => this.setGameState(s)}/>
+          <Mine ROW={this.state.ROW} COL={this.state.COL} NO_MINES={this.state.NO_MINES} 
+            reset={this.state.reset} setGameState={(s) => this.setGameState(s)} game_state={this.state.game_state}/>
         </div>
-        { this.state.game_state == 'won' ? "win" : "-" }
-        { this.state.game_state == 'lost' ? "lost" : "-" }
+        { this.state.game_state}
 
         <p className='text-center mt-3'>
         <button type="button" className="btn btn-outline-warning" id="reset-btn" onClick={()=>this.resetGame()}>Reset</button>
@@ -97,6 +101,7 @@ class App extends React.Component{
             </div>
           </div>
         </div>
+        <Modal id="win" game_state={this.state.game_state}/>
       </>
     );
   }

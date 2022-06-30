@@ -49,7 +49,8 @@ class Mine extends React.Component {
       this.state = {
         blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
         init: true,
-        reset: true
+        reset: true,
+        playing: true
       }
       console.log("init", ROW, COL, this.state)
   }
@@ -67,7 +68,8 @@ class Mine extends React.Component {
         return {
           blocks: Array(ROW).fill(Array(COL).fill({mine: false, val: 0, shown: false, mark: false})),
           init: true,
-          reset: props.reset
+          reset: props.reset,
+          playing: true
         }
     }
     return null;
@@ -135,14 +137,18 @@ class Mine extends React.Component {
       this.generateMine(i, j)
       return;
     }
+    // if lost or won
+    if(!this.state.playing){
+      alert("Restart game!!")
+    }
 
     let blocks = this.blocks(), not_shown = 0;
   
     blocks[i][j].shown = true;
   
     if(blocks[i][j].mine){
-      alert("game over");
       this.props.setGameState('lost')
+      this.setState({playing: false})
     }
     else{
       // check the number of not shown mines
@@ -153,8 +159,8 @@ class Mine extends React.Component {
     // win
     console.log(not_shown, NO_MINES)
     if((not_shown == NO_MINES) && not_shown != 0){
-      alert("Win")
       this.props.setGameState('won')
+      this.setState({playing: false})
     }
 
     if(zero(blocks[i][j]))
@@ -173,12 +179,15 @@ class Mine extends React.Component {
 
   render() { 
     return (
+      <div>
+      <div></div>
       <div className='grid'>
       {
         this.state.blocks.map((row, i) => {
           return row.map((s, j) => <Block onClick={()=>this.handelClick(i, j)} oMD={(e) => this.oMD(e, i, j)} config={s} key={`${i}-${j}`} val="4" i={i} j={j}/>)
         })
       }
+      </div>
       </div>
     );
   }
