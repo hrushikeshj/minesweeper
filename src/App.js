@@ -16,7 +16,7 @@ const colour = {
   bd: '--back-dark'
 }
 
-const Minesweeper_App_State = 'minesweeper-app-state'
+const Minesweeper_App_State = 'minesweeper-app-state-v2'
 class App extends React.Component{
 
   constructor(props){
