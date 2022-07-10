@@ -2,7 +2,7 @@ A customizable minesweeper game made with react.
 Play here [https://hrushikeshj.github.io/minesweeper](https://hrushikeshj.github.io/minesweeper/)
 
 <a href="https://github.com/hrushikeshj/minesweeper/actions">
-  <img alt="deploy" src="https://github.com/hrushikeshj/minesweeper/actions/workflows/deploy.yml/badge.svg">
+  <img alt="deploy" src="https://github.com/hrushikeshj/minesweeper/actions/workflows/main.yml/badge.svg">
 </a>
 <br/>
 <br/>
