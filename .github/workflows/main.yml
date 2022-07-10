@@ -45,7 +45,7 @@ jobs:
         git commit -m "$(date)"
         git add origin https://github.com/${{ env.GITHUB_REPOSITORY }}
         git checkout -b gh-pages
-        git push origin gh-pages -f
+        git push -u origin gh-pages -f
         
         
       
