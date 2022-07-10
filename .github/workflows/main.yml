@@ -37,7 +37,11 @@ jobs:
 
     - name: Push gh-pages brach
       run: |
+        
+        git config --global user.email "hrushi2002j@gmail.com"
+        git config --global user.name "hrushikeshj"
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        echo $(date) > ./build/ver.txt
         npm i gh-pages --save-dev
         npx gh-pages -d build
       env:
