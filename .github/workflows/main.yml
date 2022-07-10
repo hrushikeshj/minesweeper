@@ -43,7 +43,7 @@ jobs:
         git init
         git add .
         git commit -m "$(date)"
-        git add origin https://github.com/${{ env.GITHUB_REPOSITORY }}
+        git add origin https://github.com/hrushikeshj/minesweeper.git
         git checkout -b gh-pages
         git push -u origin gh-pages -f
         
