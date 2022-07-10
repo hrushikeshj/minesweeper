@@ -38,7 +38,7 @@ jobs:
     - name: Push gh-pages brach
       run: |
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        npm i gh-pages
+        npm i gh-pages --save-dev
         gh-pages -d build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
