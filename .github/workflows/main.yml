@@ -37,15 +37,11 @@ jobs:
 
     - name: Push gh-pages brach
       run: |
-        cd build
-        git config --global user.email "hrushi2002j@gmail.com"
-        git config --global user.name "hrushikeshj"
-        git init
-        git add .
-        git commit -m "$(date)"
-        git add origin https://github.com/hrushikeshj/minesweeper.git
-        git checkout -b gh-pages
-        git push -u origin gh-pages -f
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        npm i gh-pages
+        gh-pages -d build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
         
       
