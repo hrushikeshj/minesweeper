@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - deploy
+  workflow_dispatch:
+
+env:
+  CI: false
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 16.15.1
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.15.1
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: List build files
+      run: |
+        ls
+        ls ./build
+    - name: Checkout hrushikeshj.github.io
+      uses: actions/checkout@v3
+      with:
+        repository: hrushikeshj/hrushikeshj.github.io
+        ref: main
+        token: ${{ secrets.API_TOKEN_GITHUB }}
+        path: hrushikeshj.github.io
+
+    - name: Push gh-pages brach
+      run: |
+        cd build
+        git config --global user.email "hrushi2002j@gmail.com"
+        git config --global user.name "hrushikeshj"
+        git init
+        git add .
+        git commit -m "$(date)"
+        git add origin https://github.com/${{ env.GITHUB_REPOSITORY }}
+        git checkout -b gh-pages
+        git push origin gh-pages -f
+        
+        
+      
